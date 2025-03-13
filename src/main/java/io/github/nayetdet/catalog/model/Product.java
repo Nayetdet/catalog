@@ -10,11 +10,7 @@ import java.math.BigDecimal;
 @Setter
 @Entity
 @Table
-public class Product {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Product extends AbstractEntity {
 
     @Column(nullable = false, length = 50)
     private String name;
@@ -24,5 +20,9 @@ public class Product {
 
     @Column(precision = 18, scale = 2, nullable = false)
     private BigDecimal price;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 
 }

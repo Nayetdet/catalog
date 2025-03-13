@@ -13,7 +13,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(AbstractException.class)
-    public final ResponseEntity<ExceptionResponse> handleBaseExceptions(AbstractException ex) {
+    public final ResponseEntity<ExceptionResponse> handleAbstractExceptions(AbstractException ex) {
         var responseStatus = ex.getClass().getAnnotation(ResponseStatus.class);
         var httpStatus = responseStatus != null
                 ? responseStatus.value()

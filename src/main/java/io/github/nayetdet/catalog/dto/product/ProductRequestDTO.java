@@ -1,5 +1,6 @@
 package io.github.nayetdet.catalog.dto.product;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -10,6 +11,7 @@ import java.math.BigDecimal;
 
 @Getter
 @Setter
+@Schema(name = "ProductRequest")
 public class ProductRequestDTO {
 
     @NotBlank
@@ -22,5 +24,8 @@ public class ProductRequestDTO {
 
     @NotNull
     private BigDecimal price;
+
+    @NotNull
+    private Long categoryId;
 
 }

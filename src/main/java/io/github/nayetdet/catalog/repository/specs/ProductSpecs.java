@@ -9,12 +9,12 @@ public class ProductSpecs {
 
     public static Specification<Product> nameLike(String name) {
         return (root, query, cb) ->
-                cb.like(root.get("name"), "%" + name + "%");
+                cb.like(cb.upper(root.get("name")), "%" + name.toUpperCase() + "%");
     }
 
     public static Specification<Product> descriptionLike(String description) {
         return (root, query, cb) ->
-                cb.like(root.get("description"), "%" + description + "%");
+                cb.like(cb.upper(root.get("description")), "%" + description.toUpperCase() + "%");
     }
 
     public static Specification<Product> priceEqual(BigDecimal price) {

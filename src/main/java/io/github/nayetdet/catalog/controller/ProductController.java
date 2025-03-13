@@ -1,63 +1,62 @@
 package io.github.nayetdet.catalog.controller;
 
+import io.github.nayetdet.catalog.controller.docs.ProductControllerDocs;
 import io.github.nayetdet.catalog.dto.product.ProductDTO;
 import io.github.nayetdet.catalog.dto.product.ProductRequestDTO;
+import io.github.nayetdet.catalog.dto.product.ProductSearchDTO;
 import io.github.nayetdet.catalog.service.ProductService;
+import io.github.nayetdet.catalog.utils.page.CustomPage;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import java.math.BigDecimal;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/products")
-public class ProductController {
+@RequestMapping("/api/v1/products")
+@Tag(name = "Products", description = "Endpoints for managing products")
+public class ProductController extends AbstractController implements ProductControllerDocs {
 
-    private final ProductService service;
+    private final ProductService productService;
 
+    @Override
     @GetMapping
-    public ResponseEntity<Page<ProductDTO>> search(
-            @RequestParam(required = false) String name,
-            @RequestParam(required = false) String description,
-            @RequestParam(required = false) BigDecimal price,
-            @RequestParam(name = "page-number", defaultValue = "0") Integer pageNumber,
-            @RequestParam(name = "page-size", defaultValue = "10") Integer pageSize
-    ) {
-        var productDTOs = service.search(name, description, price, pageNumber, pageSize);
+    public ResponseEntity<CustomPage<ProductDTO>> search(@ModelAttribute ProductSearchDTO productSearchDTO) {
+        if (productSearchDTO == null) {
+            productSearchDTO = new ProductSearchDTO();
+        }
+
+        var productDTOs = productService.search(productSearchDTO);
         return ResponseEntity.ok(productDTOs);
     }
 
+    @Override
     @GetMapping("/{id}")
     public ResponseEntity<ProductDTO> findById(@PathVariable Long id) {
-        var productDTO = service.findById(id);
+        var productDTO = productService.findById(id);
         return productDTO.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @Override
     @PostMapping
     public ResponseEntity<ProductDTO> create(@RequestBody @Valid ProductRequestDTO productRequestDTO) {
-        var productDTO = service.create(productRequestDTO);
-        var uri = ServletUriComponentsBuilder
-                .fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(productDTO.getId())
-                .toUri();
-
+        var productDTO = productService.create(productRequestDTO);
+        var uri = getHeaderLocation(productDTO.getId());
         return ResponseEntity.created(uri).body(productDTO);
     }
 
+    @Override
     @PutMapping("/{id}")
     public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody @Valid ProductRequestDTO productRequestDTO) {
-        service.update(id, productRequestDTO);
-        return ResponseEntity.ok().build();
+        productService.update(id, productRequestDTO);
+        return ResponseEntity.noContent().build();
     }
 
+    @Override
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable Long id) {
-        service.deleteById(id);
+        productService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 

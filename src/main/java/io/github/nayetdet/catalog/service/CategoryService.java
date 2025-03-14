@@ -1,5 +1,7 @@
 package io.github.nayetdet.catalog.service;
 
+import static io.github.nayetdet.catalog.repository.specs.CategorySpecs.*;
+
 import io.github.nayetdet.catalog.dto.category.CategoryDTO;
 import io.github.nayetdet.catalog.dto.category.CategoryRequestDTO;
 import io.github.nayetdet.catalog.dto.category.CategorySearchDTO;
@@ -10,9 +12,8 @@ import io.github.nayetdet.catalog.repository.CategoryRepository;
 import io.github.nayetdet.catalog.utils.page.CustomPage;
 import io.github.nayetdet.catalog.validator.CategoryValidator;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -26,18 +27,11 @@ public class CategoryService {
     private final CategoryValidator categoryValidator;
 
     public CustomPage<CategoryDTO> search(CategorySearchDTO categorySearchDTO) {
-        var category = new Category();
-        category.setName(categorySearchDTO.getName());
+        Specification<Category> specs = Specification.where(null);
+        if (categorySearchDTO.getName() != null) specs.and(nameLike(categorySearchDTO.getName()));
 
-        var matcher = ExampleMatcher
-                .matching()
-                .withIgnoreNullValues()
-                .withIgnoreCase()
-                .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
-
-        var example = Example.of(category, matcher);
         var pageRequest = PageRequest.of(categorySearchDTO.getPageNumber(), categorySearchDTO.getPageSize());
-        return new CustomPage<>(categoryRepository.findAll(example, pageRequest).map(categoryMapper::toDTO));
+        return new CustomPage<>(categoryRepository.findAll(specs, pageRequest).map(categoryMapper::toDTO));
     }
 
     public Optional<CategoryDTO> findById(Long id) {
@@ -61,7 +55,6 @@ public class CategoryService {
         var updatedCategory = categoryMapper.toEntity(categoryRequestDTO);
         updatedCategory.setId(id);
         updatedCategory.setCreatedAt(category.getCreatedAt());
-        updatedCategory.setUpdatedAt(category.getUpdatedAt());
 
         categoryValidator.validate(updatedCategory);
         categoryRepository.save(updatedCategory);

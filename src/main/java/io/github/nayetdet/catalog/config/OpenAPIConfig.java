@@ -10,11 +10,12 @@ public class OpenAPIConfig {
 
     @Bean
     public OpenAPI openAPI() {
-        return new OpenAPI()
-                .info(new Info()
-                        .title("Catalog API")
-                        .description("Product management API")
-                        .version("v1"));
+        var info = new Info()
+                .title("Catalog API")
+                .description("Product management API")
+                .version("v1");
+
+        return new OpenAPI().info(info);
     }
 
 }

@@ -6,7 +6,7 @@ import java.net.URI;
 
 public abstract class AbstractController {
 
-    public URI getHeaderLocation(Long id) {
+    protected URI getHeaderLocation(Long id) {
         return ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")

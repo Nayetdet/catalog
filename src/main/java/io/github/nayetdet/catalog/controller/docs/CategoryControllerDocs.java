@@ -9,9 +9,9 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -32,7 +32,7 @@ public interface CategoryControllerDocs {
                     @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
             }
     )
-    ResponseEntity<CustomPage<CategoryDTO>> search(@ModelAttribute CategorySearchDTO categorySearchDTO);
+    ResponseEntity<CustomPage<CategoryDTO>> search(@ParameterObject CategorySearchDTO categorySearchDTO);
 
     @Operation(
             summary = "Find a category by ID",

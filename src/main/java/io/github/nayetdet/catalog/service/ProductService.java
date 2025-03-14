@@ -3,12 +3,12 @@ package io.github.nayetdet.catalog.service;
 import static io.github.nayetdet.catalog.repository.specs.ProductSpecs.*;
 
 import io.github.nayetdet.catalog.dto.product.ProductSearchDTO;
+import io.github.nayetdet.catalog.model.Product;
 import io.github.nayetdet.catalog.utils.page.CustomPage;
 import io.github.nayetdet.catalog.dto.product.ProductDTO;
 import io.github.nayetdet.catalog.dto.product.ProductRequestDTO;
 import io.github.nayetdet.catalog.exception.NotFoundException;
 import io.github.nayetdet.catalog.mapper.ProductMapper;
-import io.github.nayetdet.catalog.model.Product;
 import io.github.nayetdet.catalog.repository.ProductRepository;
 import io.github.nayetdet.catalog.validator.ProductValidator;
 import lombok.RequiredArgsConstructor;
@@ -57,7 +57,6 @@ public class ProductService {
         var updatedProduct = productMapper.toEntity(productRequestDTO);
         updatedProduct.setId(id);
         updatedProduct.setCreatedAt(product.getCreatedAt());
-        updatedProduct.setUpdatedAt(product.getUpdatedAt());
 
         productValidator.validate(updatedProduct);
         productRepository.save(updatedProduct);

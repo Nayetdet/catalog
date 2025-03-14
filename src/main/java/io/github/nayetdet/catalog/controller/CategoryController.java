@@ -9,6 +9,7 @@ import io.github.nayetdet.catalog.utils.page.CustomPage;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +23,7 @@ public class CategoryController extends AbstractController implements CategoryCo
 
     @Override
     @GetMapping
-    public ResponseEntity<CustomPage<CategoryDTO>> search(@ModelAttribute CategorySearchDTO categorySearchDTO) {
+    public ResponseEntity<CustomPage<CategoryDTO>> search(@ParameterObject CategorySearchDTO categorySearchDTO) {
         if (categorySearchDTO == null) {
             categorySearchDTO = new CategorySearchDTO();
         }

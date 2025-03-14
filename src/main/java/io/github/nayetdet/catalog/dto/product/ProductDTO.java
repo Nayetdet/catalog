@@ -1,6 +1,5 @@
 package io.github.nayetdet.catalog.dto.product;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import io.github.nayetdet.catalog.dto.category.CategoryDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
@@ -20,8 +19,6 @@ public class ProductDTO {
     private BigDecimal price;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-
-    @JsonProperty("category")
-    private CategoryDTO categoryDTO;
+    private CategoryDTO category;
 
 }

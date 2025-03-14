@@ -9,7 +9,6 @@ import org.mapstruct.Mapper;
 public interface CategoryMapper {
 
     Category toEntity(CategoryRequestDTO categoryRequestDTO);
-
     CategoryDTO toDTO(Category category);
 
 }

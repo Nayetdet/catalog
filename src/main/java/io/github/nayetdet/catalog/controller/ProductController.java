@@ -9,6 +9,7 @@ import io.github.nayetdet.catalog.utils.page.CustomPage;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +23,7 @@ public class ProductController extends AbstractController implements ProductCont
 
     @Override
     @GetMapping
-    public ResponseEntity<CustomPage<ProductDTO>> search(@ModelAttribute ProductSearchDTO productSearchDTO) {
+    public ResponseEntity<CustomPage<ProductDTO>> search(@ParameterObject ProductSearchDTO productSearchDTO) {
         if (productSearchDTO == null) {
             productSearchDTO = new ProductSearchDTO();
         }

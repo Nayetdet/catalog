@@ -15,3 +15,8 @@ spring:
     paths-to-include: /api/**/**
     swagger-ui:
       use-root-path: true
+security:
+  jwt:
+    token:
+      secret-key: NTNjcjM3
+      expiration-time-in-ms: 3600000

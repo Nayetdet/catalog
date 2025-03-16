@@ -1,0 +1,10 @@
+CREATE TABLE IF NOT EXISTS `product` (
+    `id` BIGINT AUTO_INCREMENT PRIMARY KEY,
+    `category_id` BIGINT NOT NULL,
+    `name` VARCHAR(50) NOT NULL,
+    `description` VARCHAR(300) NOT NULL,
+    `price` DECIMAL(18,2) NOT NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (`category_id`) REFERENCES `category` (`id`)
+);

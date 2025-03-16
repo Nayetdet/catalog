@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.http.MediaType;
@@ -20,6 +21,7 @@ public interface ProductControllerDocs {
     @Operation(
             summary = "Search all products",
             tags = {"Products"},
+            security = @SecurityRequirement(name = "Bearer"),
             responses = {
                     @ApiResponse(
                             description = "Ok",
@@ -29,6 +31,7 @@ public interface ProductControllerDocs {
                                     schema = @Schema(implementation = CustomPage.class)
                             )
                     ),
+                    @ApiResponse(description = "Forbidden", responseCode = "403", content = @Content),
                     @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
             }
     )
@@ -37,6 +40,7 @@ public interface ProductControllerDocs {
     @Operation(
             summary = "Find a product by ID",
             tags = {"Products"},
+            security = @SecurityRequirement(name = "Bearer"),
             responses = {
                     @ApiResponse(
                             description = "Ok",
@@ -46,6 +50,7 @@ public interface ProductControllerDocs {
                                     schema = @Schema(implementation = ProductDTO.class)
                             )
                     ),
+                    @ApiResponse(description = "Forbidden", responseCode = "403", content = @Content),
                     @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
                     @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
             }
@@ -55,6 +60,7 @@ public interface ProductControllerDocs {
     @Operation(
             summary = "Create a product",
             tags = {"Products"},
+            security = @SecurityRequirement(name = "Bearer"),
             responses = {
                     @ApiResponse(
                             description = "Created",
@@ -64,6 +70,7 @@ public interface ProductControllerDocs {
                                     schema = @Schema(implementation = ProductDTO.class)
                             )
                     ),
+                    @ApiResponse(description = "Forbidden", responseCode = "403", content = @Content),
                     @ApiResponse(description = "Conflict", responseCode = "409", content = @Content),
                     @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
             }
@@ -73,7 +80,9 @@ public interface ProductControllerDocs {
     @Operation(
             summary = "Update a product",
             tags = {"Products"},
+            security = @SecurityRequirement(name = "Bearer"),
             responses = {
+                    @ApiResponse(description = "Forbidden", responseCode = "403", content = @Content),
                     @ApiResponse(description = "No Content", responseCode = "204", content = @Content),
                     @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
             }
@@ -83,7 +92,9 @@ public interface ProductControllerDocs {
     @Operation(
             summary = "Delete a product by ID",
             tags = {"Products"},
+            security = @SecurityRequirement(name = "Bearer"),
             responses = {
+                    @ApiResponse(description = "Forbidden", responseCode = "403", content = @Content),
                     @ApiResponse(description = "No Content", responseCode = "204", content = @Content),
                     @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
             }

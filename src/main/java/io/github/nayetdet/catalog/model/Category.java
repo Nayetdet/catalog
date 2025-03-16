@@ -15,7 +15,7 @@ import java.util.List;
 @Table
 public class Category extends AbstractEntity {
 
-    @Column(nullable = false, length = 50)
+    @Column(length = 50, nullable = false)
     private String name;
 
     @OneToMany(mappedBy = "category")

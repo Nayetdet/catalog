@@ -12,10 +12,10 @@ import java.math.BigDecimal;
 @Table
 public class Product extends AbstractEntity {
 
-    @Column(nullable = false, length = 50)
+    @Column(length = 50, nullable = false)
     private String name;
 
-    @Column(nullable = false, length = 300)
+    @Column(length = 300, nullable = false)
     private String description;
 
     @Column(precision = 18, scale = 2, nullable = false)

@@ -21,8 +21,8 @@ public class ProductController extends AbstractController implements ProductCont
 
     private final ProductService productService;
 
-    @Override
     @GetMapping
+    @Override
     public ResponseEntity<CustomPage<ProductDTO>> search(@ParameterObject ProductSearchDTO productSearchDTO) {
         if (productSearchDTO == null) {
             productSearchDTO = new ProductSearchDTO();
@@ -32,30 +32,30 @@ public class ProductController extends AbstractController implements ProductCont
         return ResponseEntity.ok(productDTOs);
     }
 
-    @Override
     @GetMapping("/{id}")
+    @Override
     public ResponseEntity<ProductDTO> findById(@PathVariable Long id) {
         var productDTO = productService.findById(id);
         return productDTO.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @Override
     @PostMapping
+    @Override
     public ResponseEntity<ProductDTO> create(@RequestBody @Valid ProductRequestDTO productRequestDTO) {
         var productDTO = productService.create(productRequestDTO);
         var uri = getHeaderLocation(productDTO.getId());
         return ResponseEntity.created(uri).body(productDTO);
     }
 
-    @Override
     @PutMapping("/{id}")
+    @Override
     public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody @Valid ProductRequestDTO productRequestDTO) {
         productService.update(id, productRequestDTO);
         return ResponseEntity.noContent().build();
     }
 
-    @Override
     @DeleteMapping("/{id}")
+    @Override
     public ResponseEntity<Void> deleteById(@PathVariable Long id) {
         productService.deleteById(id);
         return ResponseEntity.noContent().build();

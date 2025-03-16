@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.http.MediaType;
@@ -20,6 +21,7 @@ public interface CategoryControllerDocs {
     @Operation(
             summary = "Search all categories",
             tags = {"Categories"},
+            security = @SecurityRequirement(name = "Bearer"),
             responses = {
                     @ApiResponse(
                             description = "Ok",
@@ -29,6 +31,7 @@ public interface CategoryControllerDocs {
                                     schema = @Schema(implementation = CustomPage.class)
                             )
                     ),
+                    @ApiResponse(description = "Forbidden", responseCode = "403", content = @Content),
                     @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
             }
     )
@@ -37,6 +40,7 @@ public interface CategoryControllerDocs {
     @Operation(
             summary = "Find a category by ID",
             tags = {"Categories"},
+            security = @SecurityRequirement(name = "Bearer"),
             responses = {
                     @ApiResponse(
                             description = "Ok",
@@ -46,6 +50,7 @@ public interface CategoryControllerDocs {
                                     schema = @Schema(implementation = CategoryDTO.class)
                             )
                     ),
+                    @ApiResponse(description = "Forbidden", responseCode = "403", content = @Content),
                     @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
                     @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
             }
@@ -55,6 +60,7 @@ public interface CategoryControllerDocs {
     @Operation(
             summary = "Create a category",
             tags = {"Categories"},
+            security = @SecurityRequirement(name = "Bearer"),
             responses = {
                     @ApiResponse(
                             description = "Created",
@@ -64,6 +70,7 @@ public interface CategoryControllerDocs {
                                     schema = @Schema(implementation = CategoryDTO.class)
                             )
                     ),
+                    @ApiResponse(description = "Forbidden", responseCode = "403", content = @Content),
                     @ApiResponse(description = "Conflict", responseCode = "409", content = @Content),
                     @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
             }
@@ -73,8 +80,10 @@ public interface CategoryControllerDocs {
     @Operation(
             summary = "Update a category",
             tags = {"Categories"},
+            security = @SecurityRequirement(name = "Bearer"),
             responses = {
                     @ApiResponse(description = "No Content", responseCode = "204", content = @Content),
+                    @ApiResponse(description = "Forbidden", responseCode = "403", content = @Content),
                     @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
             }
     )
@@ -83,8 +92,10 @@ public interface CategoryControllerDocs {
     @Operation(
             summary = "Delete a category by ID",
             tags = {"Categories"},
+            security = @SecurityRequirement(name = "Bearer"),
             responses = {
                     @ApiResponse(description = "No Content", responseCode = "204", content = @Content),
+                    @ApiResponse(description = "Forbidden", responseCode = "403", content = @Content),
                     @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
             }
     )

@@ -7,7 +7,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -21,10 +21,10 @@ public abstract class AbstractEntity {
 
     @CreatedDate
     @Column(name = "created_at")
-    protected LocalDateTime createdAt;
+    protected Date createdAt;
 
     @LastModifiedDate
     @Column(name = "updated_at")
-    protected LocalDateTime updatedAt;
+    protected Date updatedAt;
 
 }

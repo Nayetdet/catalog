@@ -21,8 +21,8 @@ public class CategoryController extends AbstractController implements CategoryCo
 
     private final CategoryService categoryService;
 
-    @Override
     @GetMapping
+    @Override
     public ResponseEntity<CustomPage<CategoryDTO>> search(@ParameterObject CategorySearchDTO categorySearchDTO) {
         if (categorySearchDTO == null) {
             categorySearchDTO = new CategorySearchDTO();
@@ -32,30 +32,30 @@ public class CategoryController extends AbstractController implements CategoryCo
         return ResponseEntity.ok(categoryDTOs);
     }
 
-    @Override
     @GetMapping("{id}")
+    @Override
     public ResponseEntity<CategoryDTO> findById(@PathVariable Long id) {
         var categoryDTO = categoryService.findById(id);
         return categoryDTO.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @Override
     @PostMapping
+    @Override
     public ResponseEntity<CategoryDTO> create(@RequestBody @Valid CategoryRequestDTO categoryRequestDTO) {
         var categoryDTO = categoryService.create(categoryRequestDTO);
         var uri = getHeaderLocation(categoryDTO.getId());
         return ResponseEntity.created(uri).body(categoryDTO);
     }
 
-    @Override
     @PutMapping("{id}")
+    @Override
     public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody @Valid CategoryRequestDTO categoryRequestDTO) {
         categoryService.update(id, categoryRequestDTO);
         return ResponseEntity.noContent().build();
     }
 
-    @Override
     @DeleteMapping("{id}")
+    @Override
     public ResponseEntity<Void> deleteById(@PathVariable Long id) {
         categoryService.deleteById(id);
         return ResponseEntity.noContent().build();
